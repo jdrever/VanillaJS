@@ -61,24 +61,27 @@
         // Get the show passwords checkbox
         let showPasswordCheckbox = document.querySelector('#show-password');
         // Get the password input
-        let passwordInput = document.querySelector('#password');
+       
         if (showPasswordCheckbox)
         {
             showPasswordCheckbox.addEventListener('click', function(event)
             {
-                if (showPasswordCheckbox.checked)
+                let passwordInput = document.querySelector('#password');
+                if (passwordInput)
                 {
-                    passwordInput.type="text";
-                }
-                else
-                {
-                    passwordInput.type="password";
+                    if (event.target.checked)
+                    {
+                        passwordInput.type="text";
+                    }
+                    else
+                    {
+                        passwordInput.type="password";
+                    }
                 }
             });
 
         }
-
-    </script>
+        </script>
 	</body>
 </html>
 
