@@ -88,7 +88,7 @@
 		<script>
 
 			let passwordInput=document.querySelector('#password');
-			let newPasswordInputs=document.querySelectorAll('#new-password');
+			let newPasswordInputs=document.querySelectorAll('#current-password, #new-password');
 
 			document.addEventListener('click', function (event) {
 
@@ -107,7 +107,7 @@
 
 				if (event.target.matches('#show-passwords')) 
 				{
-					for (let passwordInput of passwordInputs)
+					for (let passwordInput of newPasswordInputs)
 					{    
 						if (event.target.checked)
 						{	
