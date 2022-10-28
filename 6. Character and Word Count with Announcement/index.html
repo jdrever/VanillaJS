@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Character Count</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+
+			label {
+				display: block;
+				width: 100%;
+			}
+
+			textarea {
+				min-height: 24em;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Character Count</h1>
+
+		<label for="text">Enter your text below.</label>
+		<textarea id="text"></textarea>
+
+		<p id="speak-characters" aria-live="polite" aria-atomic="true">You have written <span id="word-count">0</span> words</strong> and <strong><span id="character-count">0</span> characters</strong></p>
+
+		<script>
+			let textArea = document.querySelector('#text');
+            let characterCount = document.querySelector('#character-count');
+			let speakCharactersButton = document.querySelector('#speak-characters-button');
+			let speakCharacters = document.querySelector('#speak-characters');
+			let wordCount = document.querySelector('#word-count');
+            textArea.addEventListener('input', function (event) {
+				// Get the word count
+				let words = textArea.value.split(/[\s]+/g).filter(function (word) {
+					return word.length;
+				});
+                characterCount.textContent=textArea.value.length;
+				wordCount.textContent=words.length;  
+            });
+
+
+			//my plan was to have a separate hidden element update for screen reader users
+			//only but can't apply 
+
+			//setup before functions
+			var typingTimer;                //timer identifier
+			var doneTypingInterval = 1000;  //time in ms (5 seconds)
+
+			//on keyup, start the countdown
+			textArea.addEventListener('keyup', function(event){
+				clearTimeout(typingTimer);
+				if (textArea.value) {
+					typingTimer = setTimeout(doneTyping, doneTypingInterval);
+				}
+			});
+
+			//user is "finished typing," do something
+			function doneTyping () {
+				// Get the word count
+				let words = text.value.split(/[\s]+/g).filter(function (word) {
+					return word.length;
+				});
+
+				speakCharacters.textContent='You have written ' + textArea.value.length + ' characters and '+ words.length + ' words'; 
+			}
+
+		</script>
+	</body>
+</html>

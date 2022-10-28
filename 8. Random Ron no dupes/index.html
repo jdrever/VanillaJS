@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Random Ron</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Random Ron</h1>
+
+		<blockquote id="quote"></blockquote>
+
+		<p>
+			<button id="get-quote">More Ron</button>
+		</p>
+
+
+        <script>
+			// Get the blockquote and button elements
+			let quote = document.querySelector('#quote');
+			let btn = document.querySelector('#get-quote');
+            let quotes = [];
+            var quoteFound=false;
+
+			// Get a fresh quote and render it into the DOM
+            function getQuote () 
+            {
+				fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) 
+                {
+					if (response.ok) {
+						return response.json();
+					}
+					throw response.status;
+				}).then(function (data) 
+                {
+                    if (checkIfQuoteExists(data[0]))
+                    {
+					    quote.textContent = data[0];
+                    }
+				}).catch(function (error) 
+                {
+					quote.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
+			    });
+            }
+
+            function checkIfQuoteExists(quote) 
+            {
+                if (quotes.includes(quote)) 
+                {
+                    getQuote();
+                    return false;
+                }
+                quotes.push(quote);  
+                if (quotes.length == 50)
+                {
+                    quotes.shift();
+                }
+                return true;
+            }
+
+			// Get a quote on page load
+			getQuote();
+
+			// Get a quote when the #get-quote button is clicked
+			btn.addEventListener('click', getQuote);
+		</script>
+        
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Random Ron</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Random Ron</h1>
+
+		<blockquote id="display-quote"></blockquote>
+
+		<p>
+			<button id="get-quote">More Ron</button>
+		</p>
+
+
+		<script>
+        let getQuoteButton = document.querySelector('#get-quote');
+        let displayQuote = document.querySelector('#display-quote');
+        getQuoteButton.addEventListener('click', function(event)
+        {
+            fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) 
+            {
+                // If the response is successful, get the JSON
+                if (response.ok) {
+                    return response.json();
+                }
+
+                // Otherwise, throw an error
+                return response.json().then(function (json) {
+                    throw json;
+                });
+            }).then(function (data) {
+                // This is the JSON from our response
+                displayQuote.textContent=data[0];
+                
+            }).catch(function (error) {
+                // There was an error
+                console.warn(error);
+            });
+
+        }); 
+        
+
+		</script>
+	</body>
+</html>

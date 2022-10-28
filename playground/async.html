@@ -1,0 +1,36 @@
+<script>
+
+/**
+ * Get an article by its ID
+ * @param  {Integer} id The article ID
+ */
+ async function getArticleByID(id) {
+    try
+    {
+
+// Get the post data
+let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+
+// If the call failed, throw an error
+if (!response.ok) {
+    throw 'Something went wrong.';
+}
+
+// Otherwise, get the post JSON
+let data = await response.json();
+
+// Log the data to the console
+console.log(data);
+    }
+    catch (error) {
+		console.warn('Error: '+error);
+	}
+
+}
+
+// Get the article with an ID of 3
+getArticleByID(9999999);
+
+
+
+</script>

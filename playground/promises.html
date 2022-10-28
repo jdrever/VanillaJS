@@ -1,0 +1,19 @@
+<script>
+// Create a Promise object
+let count = new Promise(function (resolve, reject) {
+	resolve(1);
+});
+
+// logs 1, then 2, then 3, to the console
+count.then(function (num) {
+	console.log(num);
+	return num + 1;
+}).then(function (num) {
+	console.log(num);
+	return num + 1;
+}).then(function (num) {
+	console.log(num);
+	return num + 1;
+});
+
+</script>
