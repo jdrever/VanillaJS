@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Monsters!</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+
+			/**
+			 * A simple grid layout
+			 */
+			.row {
+				display: grid;
+				grid-template-columns: auto auto auto;
+				text-align: center;
+			}
+
+			.grid {
+				min-height: 6em;
+				padding: 1em;
+			}
+
+			/**
+			 * Make sure images scale
+			 */
+			img {
+				height: auto;
+				max-width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Monsters!</h1>
+
+		<div id="app"></div>
+
+		<footer>
+			<hr>
+			<p class="text-small text-muted">Icons by <a href="https://thenounproject.com/term/door/311732/">Jamie Dickinson</a>, <a href="https://thenounproject.com/term/monster/184225/">Nicky Knicky</a>, <a href="https://thenounproject.com/term/monster/1510400/">Alvaro Cabrera</a>, <a href="https://thenounproject.com/term/monster/28460/">Eliricon</a>, <a href="https://thenounproject.com/term/monster/82823/">April Yang</a>, <a href="https://thenounproject.com/term/monster/1062009/">tk66</a>, <a href="https://thenounproject.com/term/monster/24990/">Alex WaZa</a>, <a href="https://thenounproject.com/term/monster/37212/">Husein Aziz</a>, <a href="https://thenounproject.com/term/monster/2236082">iconcheese</a>, and <a href="https://thenounproject.com/term/socks/38451/">Yazmin Alanis</a>.</p>
+		</footer>
+
+		<script>
+
+            /**
+             * Randomly shuffle an array
+             * https://stackoverflow.com/a/2450976/1293256
+             * @param  {Array} array The array to shuffle
+             * @return {String}      The first item in the shuffled array
+             */
+            function shuffle (array) {
+
+            let currentIndex = array.length;
+            let temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+
+            }
+			let app = document.querySelector('#app');
+
+			// The monsters and socks
+			let monsters = [
+				{
+					name: 'monster1',
+					title: 'Curly Stout Monster', 
+					description: 'An orange oval-shaped monster monster with a tail and a curly stout'
+				},
+				{
+					name: 'monster2',
+					title:'Thin-legged Monster',
+					description: 'An orange monster with an oval-shaped body and very thin arms and legs'
+				},
+				{ 
+					name:  'monster3',
+					title:'Top-mouted Monster',
+					description: 'A green monster with a mouth a the top splitting it nearly in two and wavy arms'
+				},
+				{ 
+					name:  'monster4',
+					title:'Four-armed Monster',
+					description: 'A red monster with a tree like body, thin mouth and four arms'
+				},
+				{ 
+					name: 'monster5',
+					title:'One-eyed Monster',
+					description: 'A green monster with a sad mouth, droopy arms and a big single eye'
+				},
+				{
+					name: 'monster6',
+					title:'Upside-down Monster',
+					description: 'An upside-down green monster with a triangle-like body and jagged mouth'
+				},
+				{
+					name: 'monster7',
+					title:'Bin Monster',
+					description: 'A purple monster octupus-ish arms and a single eye in the middle of its bin-like body'
+				},
+				{
+					name: 'monster8',
+					title:'Bouncey Monster',
+					description: 'A purple monster with slit mouth, single eye, an oval body and a ready-to-bounce look'
+				},
+				{
+					name: 'monster9',
+					title:'Bird-like Monster',
+					description: 'A blue monster with two big proturbing eyes and arms like the wings of a bird'
+				},
+				{
+					name: 'monster10', 
+					title:'Top-eyed Monster',
+					description: 'A blue monster with a moustache and two eyes above their head'
+				},
+				{
+					name: 'monster11',
+					title:'Gorilla-like Monster',
+					description: 'A grey monster with a nice smile and big gorilla arms'
+				},
+				{
+					name: 'sock', 
+					title:'A Pair of Socks - No Monster!',
+					description: 'A pair of white socks'
+				}
+			];
+
+            shuffle(monsters);
+
+            app.innerHTML=`<div class="row">`;
+            app.innerHTML += monsters.map(function (monster) {
+					return `
+					<div class="grid">
+						<figure>
+							<img src="${ monster.name }.svg" alt="${ monster.description$}" >
+							<figcaption>${ monster.title} </figcaption>
+						</figure>
+					</div>`;
+				}).join('');
+            app.innerHTML+=`</div>`;
+
+		</script>
+	</body>
+</html>
