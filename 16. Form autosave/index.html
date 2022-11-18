@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Autosave</title>
+
+	<style type="text/css">
+		body {
+			margin: 1em auto;
+			max-width: 40em;
+			width: 88%;
+		}
+
+		label,
+		input,
+		textarea {
+			display: block;
+			width: 100%;
+		}
+
+		input,
+		textarea {
+			margin-bottom: 1em;
+		}
+
+		textarea {
+			height: 8em;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Form Autosave</h1>
+
+	<form id="save-me">
+
+		<label for="name">Name</label>
+		<input type="text" name="name" id="name">
+
+		<label for="address">Address</label>
+		<input type="text" name="address" id="address">
+
+		<label for="email">Email</label>
+		<input type="email" name="email" id="email">
+
+		<label for="more">Additional thoughts?</label>
+		<textarea name="more" id="more"></textarea>
+
+		<p>
+			<button id="submit" type="submit">Submit</button>
+		</p>
+
+	</form>
+
+	<script>
+
+		let nameInput=document.querySelector('#name');
+		let addressInput=document.querySelector('#address');
+		let emailInput=document.querySelector('#email');
+		let moreTextArea=document.querySelector('#more');
+		let button=document.querySelector('#submit');
+
+		document.addEventListener('input', function (event) {
+			
+			if (event.target.closest('#save-me'))
+			{
+				localStorage.setItem(event.target.name, event.target.value);
+			}
+		});
+
+
+		button.addEventListener('click', function(event) {
+			localStorage.removeItem('name');
+			localStorage.removeItem('address');
+			localStorage.removeItem('email');
+			localStorage.removeItem('more');
+		});
+
+
+		nameInput.value=localStorage.getItem('name') ? localStorage.getItem('name') : '';
+		addressInput.value=localStorage.getItem('address') ? localStorage.getItem('address') : '';
+		emailInput.value=localStorage.getItem('email') ? localStorage.getItem('email') : '';		
+		moreTextArea.value=localStorage.getItem('more') ? localStorage.getItem('more') : '';
+
+	</script>
+</body>
+</html>

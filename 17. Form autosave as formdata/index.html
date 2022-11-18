@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Autosave - Single Entry</title>
+
+	<style type="text/css">
+		body {
+			margin: 1em auto;
+			max-width: 40em;
+			width: 88%;
+		}
+
+		label,
+		input,
+		textarea {
+			display: block;
+			width: 100%;
+		}
+
+		input,
+		textarea {
+			margin-bottom: 1em;
+		}
+
+		textarea {
+			height: 8em;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Form Autosave - Single Entry</h1>
+
+	<form id="save-me">
+
+		<label for="name">Name</label>
+		<input type="text" name="name" id="name">
+
+		<label for="address">Address</label>
+		<input type="text" name="address" id="address">
+
+		<label for="email">Email</label>
+		<input type="email" name="email" id="email">
+
+		<label for="more">Additional thoughts?</label>
+		<textarea name="more" id="more"></textarea>
+
+		<p>
+			<button type="submit">Submit</button>
+		</p>
+
+	</form>
+
+	<script>
+
+		// localStorage prefix
+		let prefix = 'autosave_';
+
+        function serialize (data) {
+            let obj = {};
+            for (let [key, value] of data) {
+                if (obj[key] !== undefined) {
+                    if (!Array.isArray(obj[key])) {
+                        obj[key] = [obj[key]];
+                    }
+                    obj[key].push(value);
+                } else {
+                    obj[key] = value;
+                }
+            }
+            return obj;
+        }
+
+		/**
+		 * Handle input events
+		 * @param  {Event} event The event object
+		 */
+		function inputHandler (event) {
+
+            let form=event.target.closest('form');
+            
+            let data = serialize(new FormData(form));
+
+			// Only save the form data if it has an ID
+            if (!form.id) return;
+
+			// Save field to localStorage
+			localStorage.setItem(prefix + form.id, JSON.stringify(data));
+
+		}
+
+		/**
+		 * Clear all of the saved fields from storage
+		 */
+		function clearStorage () {
+            let form=event.target.closest('form');
+			localStorage.removeItem(prefix + form.id);
+
+		}
+
+		/**
+		 * Load saved data from localStorage
+		 */
+		function loadSaved (form) {
+
+			// Get all of the fields in the form
+			let data=JSON.parse(localStorage.getItem(prefix + form.id));
+            let fields = form.elements;
+
+            for (let field of fields) 
+            {
+		        if (!data[field.name]) continue;
+		        field.value = data[field.name];
+            }
+
+		}
+
+		// Load saved data from localStorage
+        let form = document.querySelector('#save-me');
+		loadSaved(form);
+
+
+		// Listen for DOM events
+		form.addEventListener('input', inputHandler);
+		form.addEventListener('submit', clearStorage);
+	</script>
+</body>
+</html>
