@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dice Library</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Dice Library</h1>
+
+		<p>All of the magic here happens in the console.</p>
+
+
+		<script>
+
+
+            let roll= (function() {
+                /**
+                 * Randomly shuffle an array
+                 * https://stackoverflow.com/a/2450976/1293256
+                 * @param  {Array} array The array to shuffle
+                 * @return {Array}       The shuffled array
+                 */
+                function shuffle (array) 
+                {
+
+                    let currentIndex = array.length;
+                    let temporaryValue, randomIndex;
+
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) 
+                    {
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
+                }
+
+                function createShuffledDiceArrayAndOuputFirstItem(number)
+                {
+                    let array=Array.from({length: number}, (_, i) => i + 1);
+                    let shuffledArray=shuffle(array);
+                    let result=shuffledArray[0];
+                    console.log(result);
+                }
+
+                /**
+                 * Rolls a d2 and outputs the result to the console
+                 */
+                function d2()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(2);
+                }
+
+                /**
+                 * Rolls a d2 and outputs the result to the console
+                 */
+                 function d4()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(4);
+                }
+
+                /**
+                 * Rolls a d6 and outputs the result to the console
+                 */
+                function d6()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(6);
+                }
+
+                /**
+                 * Rolls a d8 and outputs the result to the console
+                 */
+                 function d8()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(8);
+                }
+
+                /**
+                 * Rolls a d10 and outputs the result to the console
+                 */
+                function d10()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(10);
+                }
+
+                /**
+                 * Rolls a d12 and outputs the result to the console
+                 */
+                 function d12()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(12);
+                }
+
+                /**
+                 * Rolls a d20 and outputs the result to the console
+                 */
+                 function d20()
+                {
+                    createShuffledDiceArrayAndOuputFirstItem(20);
+                }
+                return { d2, d4, d6, d8, d10, d12, d20 };
+
+            })();
+
+            console.log('Rolling a d2');	
+            roll.d2();
+
+            console.log('Rolling a d4');	
+            roll.d4();
+
+            console.log('Rolling a d6');	
+            roll.d6();
+	
+            console.log('Rolling a d8');	
+            roll.d8();
+
+            console.log('Rolling a d10');	
+            roll.d10();
+
+            console.log('Rolling a d12');	
+            roll.d12();
+
+            console.log('Rolling a d20');	
+            roll.d20();
+
+		</script>
+	</body>
+</html>
