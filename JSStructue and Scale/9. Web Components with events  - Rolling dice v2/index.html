@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dice - Web Component</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Dice - Web Component</h1>
+
+		<roll-dice dice="4">Roll a D4</roll-dice>
+		<roll-dice dice="6">Roll a D6</roll-dice>
+
+
+		<script>
+
+
+			let roll= (function() {
+                /**
+                 * Randomly shuffle an array
+                 * https://stackoverflow.com/a/2450976/1293256
+                 * @param  {Array} array The array to shuffle
+                 * @return {Array}       The shuffled array
+                 */
+                function shuffle (array) 
+                {
+
+                    let currentIndex = array.length;
+                    let temporaryValue, randomIndex;
+
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) 
+                    {
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
+                }
+
+                function createShuffledDiceArrayAndOuputFirstItem(number)
+                {
+                    let array=Array.from({length: number}, (_, i) => i + 1);
+                    let shuffledArray=shuffle(array);
+                    return result=shuffledArray[0];
+                }
+
+                /**
+                 * Rolls a d2 and outputs the result to the console
+                 */
+                function d2()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(2);
+                }
+
+                /**
+                 * Rolls a d2 and outputs the result to the console
+                 */
+                 function d4()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(4);
+                }
+
+                /**
+                 * Rolls a d6 and outputs the result to the console
+                 */
+                function d6()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(6);
+                }
+
+                /**
+                 * Rolls a d8 and outputs the result to the console
+                 */
+                 function d8()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(8);
+                }
+
+                /**
+                 * Rolls a d10 and outputs the result to the console
+                 */
+                function d10()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(10);
+                }
+
+                /**
+                 * Rolls a d12 and outputs the result to the console
+                 */
+                 function d12()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(12);
+                }
+
+                /**
+                 * Rolls a d20 and outputs the result to the console
+                 */
+                 function d20()
+                {
+                    return createShuffledDiceArrayAndOuputFirstItem(20);
+                }
+                return { d2, d4, d6, d8, d10, d12, d20 };
+
+            })();
+
+			// Extend the HTMLElement class to create the web component
+class RollDice extends HTMLElement {
+	/**
+	 * The class constructor object
+	 */
+	constructor () {
+
+	// Always call super first in constructor
+	super();
+
+	// Render HTML
+	let btnText = this.innerHTML.trim();
+	this.innerHTML =
+		`<p>
+			<button>${btnText ? btnText : 'Roll Dice'}</button>
+		</p>
+		<div class="message" aria-live="polite"></div>`;
+
+	}
+
+	/**
+	 * Handle click events on the button
+	 */
+	clickHandler (event) {
+
+		// Get the host component
+		let host = event.target.closest('roll-dice');
+		// Get the message element
+		let target = host.querySelector('.message');
+		if (!target) return;
+
+		let dice=host.getAttribute("dice");
+		let diceRoll=0;
+		switch (dice) {
+			case '4' : 
+				diceRoll=roll.d4();
+				break;
+			case '6' :
+				diceRoll=roll.d6();
+				break;
+			default:
+				diceRoll=roll.d6();
+		}
+
+		target.textContent= `You rolled a ${diceRoll}`;
+
+		// Clear the message after 5 seconds
+		setTimeout(function () {
+			target.textContent = '';
+		}, 5000);
+
+	}
+
+	/**
+	 * Runs each time the element is appended to or moved in the DOM
+	 */
+	 connectedCallback () {
+		console.log('connected!', this);
+		// Attach a click event listener to the button
+		let btn = this.querySelector('button');
+		if (!btn) return;
+		btn.addEventListener('click', this.clickHandler);
+
+	}
+
+	/**
+	 * Runs when the element is removed from the DOM
+	 */
+	disconnectedCallback () {
+		console.log('disconnected', this);
+		// Remove the click event listener from the button
+		let btn = this.querySelector('button');
+		if (!btn) return;
+		btn.removeEventListener('click', this.clickHandler);
+	}
+}
+
+// Define the new web component
+if ('customElements' in window) {
+	customElements.define('roll-dice', RollDice);
+}
+			
+		</script>
+	</body>
+</html>
