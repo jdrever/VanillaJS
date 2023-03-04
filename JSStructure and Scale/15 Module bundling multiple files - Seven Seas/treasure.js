@@ -188,7 +188,71 @@
 		loot.textContent = treasure.getLoot();
 	}
 
+	/**
+	 * Save loot to localStorage and update the UI
+	 * @param  {Event} event The event object
+	 */
+	function saveLoot (event) {
+
+		// Create the treasure object
+		let treasure = {
+			gold: event.detail.getGold(),
+			silver: event.detail.getSilver(),
+			bronze: event.detail.getBronze()
+		};
+
+		// Save it to localStorage
+		localStorage.setItem('ss-treasure', JSON.stringify(treasure));
+
+		// Update the UI
+		showLoot(event.detail);
+
+	}
+
+	/**
+	 * Handle treasure submit events
+	 * @param  {Event} event The event object
+	 */
+	function submitHandler (event) {
+
+		// Get the coin type
+		// Only run on [data-treasure] forms
+		let coin = event.target.getAttribute('data-treasure');
+		if (!coin) return;
+
+		// Stop the form from reloading the page
+		event.preventDefault();
+
+		// Get coin value
+		let val = parseFloat(event.target.querySelector('[type="number"]').value);
+		if (!val) return;
+
+		// Add the correct loot
+		if (coin === 'gold') {
+			treasure.addGold(val);
+		} else if (coin === 'silver') {
+			treasure.addSilver(val);
+		} else if (coin === 'bronze') {
+			treasure.addBronze(val);
+		}
+
+	}
+
+	/**
+	 * Listen for loot events
+	 * @param  {Constructor} treasure The TreasureChest object
+	 */
+	function lootListeners () {
+		document.addEventListener('submit', submitHandler);
+		document.addEventListener('treasure:gold', saveLoot);
+		document.addEventListener('treasure:silver', saveLoot);
+		document.addEventListener('treasure:bronze', saveLoot);
+	}
+
+	// treasure.js
+
 	createTreasure();
 	showLoot();
+	lootListeners();
 
 })();
