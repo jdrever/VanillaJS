@@ -1,0 +1,15 @@
+{
+	"background_color": "purple",
+	"description": "Seven Seas",
+	"display": "fullscreen",
+	"icons": [
+	  {
+		"src": "logo.png",
+		"sizes": "150x150",
+		"type": "image/png"
+	  }
+	],
+	"name": "Seven Seas",
+	"short_name": "7Seas",
+	"start_url": "/"
+  }

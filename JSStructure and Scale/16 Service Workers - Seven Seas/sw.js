@@ -1,13 +1,24 @@
-// Listen for the install event
+let coreAssets = [
+	'/style.css',
+	'/offline.html'
+];
+
+// On install, cache some stuff
 self.addEventListener('install', function (event) {
 
-	// Cache the offline.html page
+	// Activate immediately
+	self.skipWaiting();
+
+	// Cache core assets
 	event.waitUntil(caches.open('app').then(function (cache) {
-		cache.add(new Request('offline.html'));
+		for (let asset of coreAssets) {
+			cache.add(new Request(asset));
+		}
 		return cache;
 	}));
 
 });
+
 
 
 // Listen for request events
